@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         datapath = getFilesDir() + "/tesseract/";
         checkFile(new File(datapath + "tessdata/"));
 
-        String lang = "eng";
+        String language = "eng";
         mTess = new TessBaseAPI();
-        mTess.init(datapath, lang);
+        mTess.init(datapath, language);
     }
 
     public void processImage(View view){
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             copyFiles();
         }
         if(dir.exists()) {
-            String datafilepath = datapath+ "/tessdata/eng.traineddata";
+            String datafilepath = datapath + "/tessdata/eng.traineddata";
             File datafile = new File(datafilepath);
             if (!datafile.exists()) {
                 copyFiles();
@@ -65,17 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
             AssetManager assetManager = getAssets();
 
-            InputStream instream = assetManager.open("tessdata/eng.traineddata");
-            OutputStream outstream = new FileOutputStream(filepath);
+            InputStream inputstream = assetManager.open("tessdata/eng.traineddata");
+            OutputStream outputstream = new FileOutputStream(filepath);
 
             byte[] buffer = new byte[1024];
             int read;
-            while ((read = instream.read(buffer)) != -1) {
-                outstream.write(buffer, 0, read);
+            while ((read = inputstream.read(buffer)) != -1) {
+                outputstream.write(buffer, 0, read);
             }
-            outstream.flush();
-            outstream.close();
-            instream.close();
+            outputstream.flush();
+            outputstream.close();
+            inputstream.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
